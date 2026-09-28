@@ -2,7 +2,7 @@ var APP_DATA = {
   "scenes": [
     {
       "id": "0-pano0001_-_pano0034_retocado",
-      "name": "PANO0001_-_PANO0034_retocado",
+      "name": "Domingo 27/Oct/2026",
       "levels": [
         {
           "tileSize": 256,
