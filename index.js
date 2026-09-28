@@ -76,7 +76,7 @@
   //   ZOOM_MIN_VFOV: cuánto se puede acercar (más chico = más zoom, pero la
   //                  imagen se ve más borrosa porque solo tiene 8000 px).
   var ZOOM_MIN_VFOV = 20;
-  var ZOOM_MAX_VFOV = 90;
+  var ZOOM_MAX_VFOV = 100;
 
   // ---- Control táctil propio -----------------------------------------------
   // Un dedo gira la vista. El pellizco lo maneja por defecto el control
@@ -165,7 +165,7 @@
     var limiter = Marzipano.util.compose(
       Marzipano.RectilinearView.limit.vfov(ZOOM_MIN_VFOV*Math.PI/180, ZOOM_MAX_VFOV*Math.PI/180),
       Marzipano.RectilinearView.limit.hfov(0, 120*Math.PI/180),
-      Marzipano.RectilinearView.limit.pitch(-25*Math.PI/180, 90*Math.PI/180)
+      Marzipano.RectilinearView.limit.pitch(0, 90*Math.PI/180)
     );
     var view = new Marzipano.RectilinearView(data.initialViewParameters, limiter);
 
