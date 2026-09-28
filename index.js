@@ -76,13 +76,13 @@
   //   ZOOM_MIN_VFOV: cuánto se puede acercar (más chico = más zoom, pero la
   //                  imagen se ve más borrosa porque solo tiene 8000 px).
   var ZOOM_MIN_VFOV = 20;
-  var ZOOM_MAX_VFOV = 100;
+  var ZOOM_MAX_VFOV = 80;
 
   // ---- Control táctil propio -----------------------------------------------
   // Un dedo gira la vista. El pellizco lo maneja por defecto el control
   // 'pinch' de Marzipano.
   var TOUCH_DIR = -1;
-  var TOUCH_SPEED = 1.5;
+  var TOUCH_SPEED = 2;
 
   // Pellizco propio de respaldo: dejar en false. Ponerlo en true SOLO si el
   // pellizco no responde en el celular (desactiva el de Marzipano).
