@@ -80,7 +80,7 @@
 
     var limiter = Marzipano.util.compose(
 		Marzipano.RectilinearView.limit.traditional(data.faceSize, 80*Math.PI/180, 120*Math.PI/180),
-		Marzipano.RectilinearView.limit.pitch(-70*Math.PI/180, 15*Math.PI/180)
+		Marzipano.RectilinearView.limit.pitch(-70*Math.PI/180, 0)
 		);
     var view = new Marzipano.RectilinearView(data.initialViewParameters, limiter);
 
