@@ -1,8 +1,8 @@
 var APP_DATA = {
   "scenes": [
     {
-      "id": "0-pano0001_-_pano0034_retocado",
-      "name": "Domingo 27/Oct/2026",
+      "id": "0-27oct2026",
+      "name": "27/Oct/2026",
       "levels": [
         {
           "tileSize": 256,
@@ -20,23 +20,27 @@ var APP_DATA = {
         {
           "tileSize": 512,
           "size": 2048
+        },
+        {
+          "tileSize": 512,
+          "size": 4096
         }
       ],
-      "faceSize": 2000,
+      "faceSize": 3000,
       "initialViewParameters": {
-        "yaw": 0.16321925342272792,
-        "pitch": 0,
+        "yaw": 0.36169746009964143,
+        "pitch": 0.7079934201949065,
         "fov": 1.4933060855672649
       },
       "linkHotspots": [],
       "infoHotspots": []
     }
   ],
-  "name": "Project Title",
+  "name": "CLUB VECINOS",
   "settings": {
     "mouseViewMode": "drag",
     "autorotateEnabled": false,
-    "fullscreenButton": false,
-    "viewControlButtons": false
+    "fullscreenButton": true,
+    "viewControlButtons": true
   }
 };
