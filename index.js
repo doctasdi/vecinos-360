@@ -112,9 +112,9 @@
     var geometry = new Marzipano.CubeGeometry(data.levels);
 
     var limiter = Marzipano.util.compose(
-		Marzipano.RectilinearView.limit.traditional(data.faceSize, 80*Math.PI/180, 120*Math.PI/180),
-		Marzipano.RectilinearView.limit.pitch(-70*Math.PI/180, 0)
-		);
+	  Marzipano.RectilinearView.limit.traditional(data.faceSize, 80*Math.PI/180, 120*Math.PI/180),
+	  Marzipano.RectilinearView.limit.pitch(-90*Math.PI/180, 10*Math.PI/180)
+	);
     var view = new Marzipano.RectilinearView(data.initialViewParameters, limiter);
 
     var scene = viewer.createScene({
