@@ -75,8 +75,8 @@
   //   ZOOM_MAX_VFOV: cuánto se puede alejar (más grande = se ve más escena).
   //   ZOOM_MIN_VFOV: cuánto se puede acercar (más chico = más zoom, pero la
   //                  imagen se ve más borrosa porque solo tiene 8000 px).
-  var ZOOM_MIN_VFOV = 40;
-  var ZOOM_MAX_VFOV = 80;
+  var ZOOM_MIN_VFOV = 20;
+  var ZOOM_MAX_VFOV = 90;
 
   // ---- Control táctil propio -----------------------------------------------
   // Un dedo gira la vista. El pellizco lo maneja por defecto el control
