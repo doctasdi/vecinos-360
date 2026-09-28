@@ -70,6 +70,39 @@
   // Initialize viewer.
   var viewer = new Marzipano.Viewer(panoElement, viewerOpts);
 
+	  // Control táctil propio (reemplaza al arrastre táctil por defecto).
+  // TOUCH_DIR = 1: el dedo a la izquierda gira la vista hacia la izquierda.
+  // TOUCH_DIR = -1: al revés (la imagen "sigue" al dedo).
+  var TOUCH_DIR = 1;
+  var TOUCH_SPEED = 1; // subir o bajar para cambiar la sensibilidad
+
+  viewer.controls().disableMethod('touchView');
+  panoElement.style.touchAction = 'none';
+
+  var touchLast = null;
+  panoElement.addEventListener('touchstart', function(e) {
+    touchLast = e.touches.length === 1
+      ? { x: e.touches[0].clientX, y: e.touches[0].clientY }
+      : null;
+  }, { passive: true });
+  panoElement.addEventListener('touchmove', function(e) {
+    if (!touchLast || e.touches.length !== 1) { return; }
+    var view = viewer.view();
+    if (!view) { return; }
+    var t = e.touches[0];
+    var p = view.parameters();
+    var radPerPx = TOUCH_SPEED * p.fov / Math.max(panoElement.clientWidth, panoElement.clientHeight);
+    view.setParameters({
+      yaw: p.yaw + (t.clientX - touchLast.x) * radPerPx * TOUCH_DIR,
+      pitch: p.pitch - (t.clientY - touchLast.y) * radPerPx * TOUCH_DIR,
+      roll: 0,
+      fov: p.fov
+    });
+    touchLast = { x: t.clientX, y: t.clientY };
+  }, { passive: true });
+  panoElement.addEventListener('touchend', function() { touchLast = null; }, { passive: true });
+  panoElement.addEventListener('touchcancel', function() { touchLast = null; }, { passive: true });
+
   // Create scenes.
   var scenes = data.scenes.map(function(data) {
     var urlPrefix = "tiles";
