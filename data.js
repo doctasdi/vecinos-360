@@ -24,19 +24,19 @@ var APP_DATA = {
       ],
       "faceSize": 2000,
       "initialViewParameters": {
-        "pitch": 0,
-        "yaw": 0,
-        "fov": 1.5707963267948966
+        "yaw": 0.04796183298662626,
+        "pitch": -1.2037198578058916,
+        "fov": 1.4933060855672649
       },
       "linkHotspots": [],
       "infoHotspots": []
     }
   ],
-  "name": "VECINOS_PRUEBA1",
+  "name": "Project Title",
   "settings": {
     "mouseViewMode": "qtvr",
     "autorotateEnabled": false,
-    "fullscreenButton": true,
+    "fullscreenButton": false,
     "viewControlButtons": true
   }
 };
