@@ -74,7 +74,7 @@
   // TOUCH_DIR = 1: el dedo a la izquierda gira la vista hacia la izquierda.
   // TOUCH_DIR = -1: al revés (la imagen "sigue" al dedo).
   var TOUCH_DIR = -1;
-  var TOUCH_SPEED = 3; // subir o bajar para cambiar la sensibilidad
+  var TOUCH_SPEED = 2; // subir o bajar para cambiar la sensibilidad
 
   viewer.controls().disableMethod('touchView');
   panoElement.style.touchAction = 'none';
@@ -94,7 +94,7 @@
     var radPerPx = TOUCH_SPEED * p.fov / Math.max(panoElement.clientWidth, panoElement.clientHeight);
     view.setParameters({
       yaw: p.yaw + (t.clientX - touchLast.x) * radPerPx * TOUCH_DIR,
-      pitch: p.pitch - (t.clientY - touchLast.y) * radPerPx * TOUCH_DIR,
+      pitch: p.pitch + (t.clientY - touchLast.y) * radPerPx * TOUCH_DIR,
       roll: 0,
       fov: p.fov
     });
