@@ -74,7 +74,7 @@
   // TOUCH_DIR = 1: el dedo a la izquierda gira la vista hacia la izquierda.
   // TOUCH_DIR = -1: al revés (la imagen "sigue" al dedo).
   var TOUCH_DIR = -1;
-  var TOUCH_SPEED = 1; // subir o bajar para cambiar la sensibilidad
+  var TOUCH_SPEED = 3; // subir o bajar para cambiar la sensibilidad
 
   viewer.controls().disableMethod('touchView');
   panoElement.style.touchAction = 'none';
