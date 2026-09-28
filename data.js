@@ -1,8 +1,8 @@
 var APP_DATA = {
   "scenes": [
     {
-      "id": "0-pano0001---pano0034",
-      "name": "PANO0001 - PANO0034",
+      "id": "0-pano0001_-_pano0034_retocado",
+      "name": "PANO0001_-_PANO0034_retocado",
       "levels": [
         {
           "tileSize": 256,
@@ -24,8 +24,8 @@ var APP_DATA = {
       ],
       "faceSize": 2000,
       "initialViewParameters": {
-        "yaw": 0.04796183298662626,
-        "pitch": -1.2037198578058916,
+        "yaw": 0.16321925342272792,
+        "pitch": 0,
         "fov": 1.4933060855672649
       },
       "linkHotspots": [],
@@ -37,6 +37,6 @@ var APP_DATA = {
     "mouseViewMode": "drag",
     "autorotateEnabled": false,
     "fullscreenButton": false,
-    "viewControlButtons": true
+    "viewControlButtons": false
   }
 };
