@@ -86,7 +86,7 @@
 
   // Pellizco propio de respaldo: dejar en false. Ponerlo en true SOLO si el
   // pellizco no responde en el celular (desactiva el de Marzipano).
-  var CUSTOM_PINCH = false;
+  var CUSTOM_PINCH = true;
 
   viewer.controls().disableMethod('touchView');
   if (CUSTOM_PINCH) {
