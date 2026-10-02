@@ -70,6 +70,87 @@
   // Initialize viewer.
   var viewer = new Marzipano.Viewer(panoElement, viewerOpts);
 
+  // ---- Zoom permitido ------------------------------------------------------
+  // Campo de visión VERTICAL, en grados.
+  //   ZOOM_MAX_VFOV: cuánto se puede alejar (más grande = se ve más escena).
+  //   ZOOM_MIN_VFOV: cuánto se puede acercar (más chico = más zoom, pero la
+  //                  imagen se ve más borrosa porque solo tiene 8000 px).
+  var ZOOM_MIN_VFOV = 20;
+  var ZOOM_MAX_VFOV = 80;
+
+  // ---- Control táctil propio -----------------------------------------------
+  // Un dedo gira la vista. El pellizco lo maneja por defecto el control
+  // 'pinch' de Marzipano.
+  var TOUCH_DIR = -1;
+  var TOUCH_SPEED = 2;
+
+  // Pellizco propio de respaldo: dejar en false. Ponerlo en true SOLO si el
+  // pellizco no responde en el celular (desactiva el de Marzipano).
+  var CUSTOM_PINCH = true;
+
+  viewer.controls().disableMethod('touchView');
+  if (CUSTOM_PINCH) {
+    viewer.controls().disableMethod('pinch');
+  }
+  panoElement.style.touchAction = 'none';
+
+  var touchLast = null;
+  var pinchLast = null;
+
+  function pinchDistance(e) {
+    var dx = e.touches[0].clientX - e.touches[1].clientX;
+    var dy = e.touches[0].clientY - e.touches[1].clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  function resetTouch(e) {
+    if (e.touches.length === 1) {
+      touchLast = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      pinchLast = null;
+    } else if (e.touches.length === 2) {
+      touchLast = null;
+      pinchLast = pinchDistance(e);
+    } else {
+      touchLast = null;
+      pinchLast = null;
+    }
+  }
+
+  panoElement.addEventListener('touchstart', resetTouch, { passive: true });
+  panoElement.addEventListener('touchend', resetTouch, { passive: true });
+  panoElement.addEventListener('touchcancel', resetTouch, { passive: true });
+
+  panoElement.addEventListener('touchmove', function(e) {
+    var view = viewer.view();
+    if (!view) { return; }
+    var p = view.parameters();
+
+    // Pellizco propio (solo si CUSTOM_PINCH está en true).
+    if (e.touches.length === 2) {
+      if (CUSTOM_PINCH && pinchLast) {
+        var d = pinchDistance(e);
+        if (d > 0) {
+          view.setParameters({ yaw: p.yaw, pitch: p.pitch, roll: 0, fov: p.fov * pinchLast / d });
+          pinchLast = d;
+        }
+      }
+      return;
+    }
+
+    // Arrastre: un dedo gira la vista.
+    if (e.touches.length === 1 && touchLast) {
+      var t = e.touches[0];
+      var radPerPx = TOUCH_SPEED * p.fov / Math.max(panoElement.clientWidth, panoElement.clientHeight);
+      view.setParameters({
+        yaw: p.yaw + (t.clientX - touchLast.x) * radPerPx * TOUCH_DIR,
+        pitch: p.pitch + (t.clientY - touchLast.y) * radPerPx * TOUCH_DIR,
+        roll: 0,
+        fov: p.fov
+      });
+      touchLast = { x: t.clientX, y: t.clientY };
+    }
+  }, { passive: true });
+
   // Create scenes.
   var scenes = data.scenes.map(function(data) {
     var urlPrefix = "tiles";
@@ -78,7 +159,14 @@
       { cubeMapPreviewUrl: urlPrefix + "/" + data.id + "/preview.jpg" });
     var geometry = new Marzipano.CubeGeometry(data.levels);
 
-    var limiter = Marzipano.RectilinearView.limit.traditional(data.faceSize, 100*Math.PI/180, 120*Math.PI/180);
+    // Limita el zoom y hasta dónde se puede mirar. No se usa el limitador
+    // "traditional" porque incluye un límite de resolución que, en pantallas
+    // de celular (alta densidad de píxeles), bloquea por completo el zoom.
+    var limiter = Marzipano.util.compose(
+      Marzipano.RectilinearView.limit.vfov(ZOOM_MIN_VFOV*Math.PI/180, ZOOM_MAX_VFOV*Math.PI/180),
+      Marzipano.RectilinearView.limit.hfov(0, 120*Math.PI/180),
+      Marzipano.RectilinearView.limit.pitch(0, 90*Math.PI/180)
+    );
     var view = new Marzipano.RectilinearView(data.initialViewParameters, limiter);
 
     var scene = viewer.createScene({
